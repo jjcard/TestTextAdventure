@@ -1,0 +1,92 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+apply plugin: 'jacoco'
+
+
+targetCompatibility = JavaVersion.VERSION_1_8 
+sourceCompatibility = JavaVersion.VERSION_1_8
+jar {
+	manifest.attributes provider: 'gradle'
+}
+eclipse {
+	project {
+		name = 'TestTextAdventure';
+	}
+}
+eclipse.classpath.file {
+	beforeMerged { classpath ->
+		classpath.entries.removeAll { entry -> entry.kind == 'lib' || entry.kind == 'var' }
+	}
+	whenMerged { classpath ->
+		classpath.entries.findAll { entry -> entry.kind == 'lib' }*.exported = false
+	}
+}
+
+eclipse.project.file.beforeMerged { project ->
+	project.natures.clear()
+}
+sourceSets{
+	main{
+		java {
+			srcDir 'src'
+		}
+		resources {
+			srcDir 'resources'
+		}
+	}
+	test{
+		java{
+			srcDir 'test'
+		}
+		//resources{
+		//	srcDir 'testResources'
+		//}
+	}
+}
+configurations {
+	compile {
+		description = 'compile classpath'
+		transitive = true
+	}
+	runtime {
+		extendsFrom compile
+	}
+}
+
+task wrapper(type: Wrapper){
+	gradleVersion = '2.12'
+}
+pmd {
+	ruleSets = ["java-basic", "java-naming", "java-braces", "java-design", "java-unnecessary"]
+	ignoreFailures = true;
+}
+findbugs {
+	ignoreFailures = true
+}
+tasks.withType(FindBugs) {
+	reports {
+		xml.enabled = false
+		html.enabled = true
+	}
+ }
+ jacocoTestReport {//run with gradlew test jacocoTestReport
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.enabled true
+		html.destination "${buildDir}/reports/jacoco"
+	}
+ }
+repositories {
+	mavenCentral()
+}
+dependencies {
+	compile ([group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.6.4"],
+			 [group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.6.4"],
+			 [group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.6.4"])
+	compile fileTree(dir: 'resources', include: '*.jar')
+			 
+	testCompile 'junit:junit:4.12'
+}
