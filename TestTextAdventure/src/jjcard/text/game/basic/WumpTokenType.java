@@ -5,7 +5,8 @@ import java.util.Arrays;
 import jjcard.text.game.parser.ITextTokenType;
 
 public enum WumpTokenType implements ITextTokenType {
-	SHOOT(false, "shoot"), MOVE(false, "move");
+	//verbs
+	SHOOT(false, "shoot", "s"), MOVE(false, "move", "m"), QUIT(false, "quit");
 	//attributes
 	private final boolean isObject;
 	private final String[] defaultWords;

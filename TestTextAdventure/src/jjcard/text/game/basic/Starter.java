@@ -19,10 +19,12 @@ public class Starter {
 	}
 	
 	private static ILocation generateMap(){
-		return null;
+		MazeLocation start = new MazeLocation();
+		return start;
 	}
 	private static Player getPlayer(){
-		return null;
+		Player player = new Player.Builder().name("player").build();
+		return player;
 	}
 
 }
