@@ -21,7 +21,7 @@ import jjcard.text.game.util.NotFoundException;
 import jjcard.text.game.util.WorldUtil;
 import jjcard.text.game.util.WorldUtil.ReturnStatus;
 
-public class TestGame extends TextGame<BasicTextTokenType, Player>{
+public class WumpGame extends TextGame<BasicTextTokenType, Player>{
 	private WorldUtil<Player> worldUtil;
 	private PrintStream output = System.out;
 	private Scanner inputScanner;
@@ -37,7 +37,7 @@ public class TestGame extends TextGame<BasicTextTokenType, Player>{
 	 * @param playerN
 	 * @throws NullPointerException if the <code>current</code> argument or <code>player</code> argument is <code>null</code>
 	 */
-	public TestGame(ILocation current, Player player) throws NullPointerException{
+	public WumpGame(ILocation current, Player player) throws NullPointerException{
 		checkArg(current, "current");
 		checkArg(player, "player");
 		this.player = player;
@@ -213,7 +213,7 @@ public class TestGame extends TextGame<BasicTextTokenType, Player>{
 			if (player.getInventory().isEmpty()) {
 				output.println("You have nothing in your inventory");
 			} else {
-				output.println(player.inventoryToString());
+				output.println(player.inventoryOverview());
 			}
 		case MONEY:
 			output.println(player.getMoney());

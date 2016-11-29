@@ -86,7 +86,7 @@ dependencies {
 	compile ([group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.6.4"],
 			 [group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.6.4"],
 			 [group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.6.4"])
-	compile fileTree(dir: 'resources', include: '*.jar')
+	compile fileTree(dir: 'Libs', include: ['*.jar'])
 			 
 	testCompile 'junit:junit:4.12'
 }
